@@ -1,0 +1,136 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coding Challenge</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+
+<body>
+<div class="container">
+    <div class="outer">
+        <div class="inner">
+            <div class="centered">
+                <div class="title">Coding Challenge!</div>
+                
+                     <form id="cPageOne" @submit.prevent="checkForm" action="./page2.html" method="post">
+    
+                        <div class="item"><div class="fieldlabel">First Name</div> <input type="text" name="firstName" placeholder="First Name" v-model="firstName">
+                      
+                        </div>
+                        <div class="item"><div class="fieldlabel">Last Name</div> <input type="text" name="lastName" placeholder="Last Name" v-model="lastName">
+                        </div>
+                        <div class="item">
+                            <div class="fieldlabel">Email</div>
+                            <input type="email" id="email" name="email" v-model="email" placeholder="abc@abc.com.au">
+                        </div>
+                        <div class="item">
+                            <div class="fieldlabel">Contact Number</div><input type="tel" name="phone" placeholder="01 1111 1111" value="">
+                        </div>
+                        
+                        <div class="item">
+                            <div align="right">
+                                <input type="submit" value="Next" id="goNext">
+                            </div>
+                        </div>
+                        
+                        <p v-if="errors.length">
+                            <b>Please correct information below:</b>
+                            <ul>
+                                <li v-for="error in errors">{{ error }}</li>
+                            </ul>
+                            
+                        </p>
+                        
+                      </form>
+                </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+
+
+<script>
+    
+  const cPageOne = new Vue({
+      el:'#cPageOne',
+      data:{
+          errors:[],
+          firstName:null,
+          lastName:null,
+          email:null,
+      },
+      methods:{
+          checkForm:function(e) {
+              
+              this.errors = [];
+              if(!this.firstName) this.errors.push("First Name required");
+              if(!this.lasttName) this.errors.push("Last Name required");
+              
+              if(!this.email) {
+              this.errors.push("Email required");
+              } else if (!this.validEmail(this.email)){
+                  this.errors.push("Valid email required");
+              }
+              if(!this.errors.length) return true;
+              e.preventDefault();
+          },
+        validEmail:function(email){
+                var chkEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[
+                return chkEmail.test(email);
+              }
+          
+            
+              
+          }
+      
+      
+  })
+
+    
+</script>
+
+<style>
+.outer {
+      display: table;
+      width: 100%;
+      height: 100%;
+}
+.inner {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+}
+
+.centered {
+      position: relative;
+      display: inline-block;
+     
+      width: 20%;
+      padding: 1em;
+      background: orange;
+  color: black;
+}
+
+.item{
+    margin-top : 7px;
+    
+}
+.fieldLabel{
+    text-align : left;
+    
+}
+
+
+    
+    
+</style>
+
+
+</html>
